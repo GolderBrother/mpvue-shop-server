@@ -1,0 +1,23 @@
+{
+    "name": "session",   
+    "script": "app.js",
+    "cwd": "./",
+    "exec_mode": "fork",
+    "watch": true,
+    "ignore_watch": ["tmp"],
+    "env": {
+        "NODE_ENV": "production",
+        "REMOTE_ADDR": "http://localhost:5757"
+    },
+    "env_dev": {
+        "NODE_ENV": "development",
+        "REMOTE_ADDR": "http://localhost:5757"
+    },
+    "env_test": {
+        "NODE_ENV": "test",
+        "REMOTE_ADDR": "http://localhost:5757"
+    },
+    "engines": {
+        "node": ">=7.6"
+    }
+}
