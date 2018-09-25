@@ -27,7 +27,7 @@ async function detailAction(ctx) {
   const issue = await mysql('nideshop_goods_issue').select();
   //品牌
   let brand = [];
-  if (info[0].brand_id) {
+  if (info[0] && info[0].brand_id) {
     brand = await mysql('nideshop_brand').where({
       id: info[0].brand_id
     }).select();

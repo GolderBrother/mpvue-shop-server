@@ -44,7 +44,7 @@ router.post('/message', controllers.message.post)
  * 首页数据
  */
 const homeRouter = require("./home");
-router.use(homeRouter.routes());
+router.use(homeRouter.routes()).use(homeRouter.allowedMethods());
 
 
 /**
@@ -100,7 +100,7 @@ router.use("/order",orderRouter.routes());
  *  收货地址相关接口
  */
 const addressRouter = require("./address");
-router.use("/address",addressRouter.routes());
+router.use("/address",addressRouter.routes()).use(addressRouter.allowedMethods());
 
 
 /**

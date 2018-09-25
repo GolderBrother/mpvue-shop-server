@@ -19,12 +19,13 @@ async function saveAction(ctx) {
   } = ctx.request.body;
 
   //如果是默认选中
-  //先在数据库查询是否默认的地址
+  //先在数据库查询是否有默认的地址
   if (checked) {
     const isDefault = await mysql("nideshop_address").where({
       user_id: openId,
       is_default: 1
     });
+    // 有的话将所有的默认地址 置为0
     if (isDefault.length > 0) {
       await mysql("nideshop_address")
         .where({
@@ -91,7 +92,8 @@ async function saveAction(ctx) {
  * @param {*} ctx
  */
 async function getListAction(ctx) {
-  var openId = ctx.query.openId;
+  // var openId = ctx.query.openId;
+  const { openId } = ctx.query;
   const addressList = await mysql("nideshop_address")
     .where({
       user_id: openId
@@ -108,7 +110,8 @@ async function getListAction(ctx) {
  * @param {*} ctx
  */
 async function detailAction(ctx) {
-  var id = ctx.query.id;
+  // var id = ctx.query.id;
+  const { id } = ctx.query;
   const detailData = await mysql("nideshop_address")
     .where({
       id: id
@@ -125,7 +128,7 @@ async function detailAction(ctx) {
  * @param {*} ctx
  */
 async function deleteAction(ctx) {
-  var id = ctx.query.id;
+  const { id } = ctx.query;
   const delData = await mysql("nideshop_address")
     .where({
       id: id
@@ -137,7 +140,8 @@ async function deleteAction(ctx) {
     };
   } else {
     ctx.body = {
-      data: false
+      data: false,
+      msg:"抱歉，未找到该条地址"
     };
   }
 
