@@ -8,8 +8,8 @@ async function listAction(ctx) {
   const size = 5;
   //这里做分页处理
   const data = await mysql("nideshop_topic").column('id', 'title', 'price_info', 'scene_pic_url', 'subtitle').limit(size).offset((page - 1) * size);
-  const data1 = await mysql("nideshop_topic").column('id', 'title', 'price_info', 'scene_pic_url', 'subtitle').select();
-  const total = parseInt(data1.length / 5);
+  const dataAll = await mysql("nideshop_topic").column('id', 'title', 'price_info', 'scene_pic_url', 'subtitle').select();
+  const total = parseInt(dataAll.length / 5);
   ctx.body = {
     "page": page,
     "total": total,

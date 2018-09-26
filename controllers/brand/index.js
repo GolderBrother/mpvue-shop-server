@@ -3,8 +3,9 @@ const {
 } = require('../../mysql');
 
 async function listAction(ctx) {
-  var page = ctx.query.page || 1;
-  var size = 5;
+  const page = ctx.query.page || 1;
+  const size = 5;
+  //分页  limit：每页条数  offset：从第几条开始(索引开始值为 0)
   const data = await mysql('nideshop_brand').column('id', 'name', 'floor_price', 'app_list_pic_url').limit(size).offset((page - 1) * size).select();
   const data1 = await mysql('nideshop_brand').column('id', 'name', 'floor_price', 'app_list_pic_url').select();
   const total = parseInt(data1.length / size);
