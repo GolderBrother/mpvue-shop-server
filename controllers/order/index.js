@@ -6,8 +6,7 @@ async function submitAction(ctx) {
     const {
         openId,
     } = ctx.request.body;
-    let goodsId = ctx.request.body.goodsId;
-    let allPrise = ctx.request.body.allPrise
+    let { goodsId, allPrise } = ctx.request.body;
     //是否存在在订单
     const isOrder = await mysql('nideshop_order').where({
         user_id: openId,
@@ -25,14 +24,8 @@ async function submitAction(ctx) {
             goods_id: goodsId,
             allprice: allPrise
         })
-        if (data) {
-            ctx.body = {
-                data: true
-            }
-        } else {
-            ctx.body = {
-                data: false
-            }
+        ctx.body = {
+            data: data ? true : false 
         }
     } else {
         const data = await mysql('nideshop_order').insert({
@@ -40,27 +33,20 @@ async function submitAction(ctx) {
             goods_id: goodsId,
             allprice: allPrise
         })
-        if (data) {
-            ctx.body = {
-                data: true
-            }
-        } else {
-            ctx.body = {
-                data: false
-            }
+        ctx.body = {
+            data: data ? true : false 
         }
     }
 
 
 }
 async function detailAction(ctx) {
-    const openId = ctx.query.openId;
-    const addressId = ctx.query.addressId || '';
+    const { openId, addressId = "" } = ctx.query;
     const orderDetail = await mysql('nideshop_order').where({
         user_id: openId,
     }).select();
 
-    var goodsIds = orderDetail[0].goods_id.split(",");
+    const goodsIds = orderDetail[0].goods_id.split(",");
     console.log(goodsIds);
 
     const list = await mysql('nideshop_cart').andWhere({
@@ -68,7 +54,7 @@ async function detailAction(ctx) {
     }).whereIn('goods_id', goodsIds).select();
 
     //收货地址
-    var addressList;
+    let addressList;
     if (addressId) {
         addressList = await mysql("nideshop_address")
             .where({

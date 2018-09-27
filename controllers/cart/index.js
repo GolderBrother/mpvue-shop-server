@@ -16,6 +16,7 @@ async function addCart(ctx) {
   }).select()
 
 
+  //如果不存在
   if (haveGoods.length == 0) {
     // const {
     //   retail_price,
@@ -32,7 +33,6 @@ async function addCart(ctx) {
       name,
       list_pic_url
     } = goods[0];
-    //如果不存在
     await mysql('nideshop_cart').insert({
       "user_id": openId,
       "goods_id": goodsId,
@@ -48,7 +48,7 @@ async function addCart(ctx) {
       "goods_id": goodsId
     }).column('number').select();
     console.log(oldNumber)
-    //跟新数据
+    //更新数据
     await mysql("nideshop_cart").where({
       "user_id": openId,
       "goods_id": goodsId
@@ -79,12 +79,14 @@ async function cartList(ctx) {
 
 async function deleteAction(ctx) {
 
-  const id = ctx.query.id;
+  const {
+    id
+  } = ctx.query;
 
   const data = await mysql("nideshop_cart").where({
     "id": id,
   }).del();
-
+  console.log("deleteAction", data)
   if (data) {
     ctx.body = {
       data: true

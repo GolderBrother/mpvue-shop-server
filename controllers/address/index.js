@@ -58,7 +58,7 @@ async function saveAction(ctx) {
         data: false
       };
     }
-  } else {  
+  } else {
     // console.log(checked == "true" || checked ? 1 : 0);
     // console.log(addressId);
 
@@ -75,15 +75,10 @@ async function saveAction(ctx) {
         user_id: openId,
         is_default: checked == "true" || checked ? 1 : 0
       });
-    if (data) {
-      ctx.body = {
-        data: true
-      };
-    } else {
-      ctx.body = {
-        data: false
-      };
-    }
+    ctx.body = {
+      data: data ? true : false,
+      msg: data ? 'success' : 'failed'
+    };
   }
 }
 
@@ -93,7 +88,9 @@ async function saveAction(ctx) {
  */
 async function getListAction(ctx) {
   // var openId = ctx.query.openId;
-  const { openId } = ctx.query;
+  const {
+    openId
+  } = ctx.query;
   const addressList = await mysql("nideshop_address")
     .where({
       user_id: openId
@@ -111,7 +108,9 @@ async function getListAction(ctx) {
  */
 async function detailAction(ctx) {
   // var id = ctx.query.id;
-  const { id } = ctx.query;
+  const {
+    id
+  } = ctx.query;
   const detailData = await mysql("nideshop_address")
     .where({
       id: id
@@ -128,7 +127,9 @@ async function detailAction(ctx) {
  * @param {*} ctx
  */
 async function deleteAction(ctx) {
-  const { id } = ctx.query;
+  const {
+    id
+  } = ctx.query;
   const delData = await mysql("nideshop_address")
     .where({
       id: id
@@ -141,7 +142,7 @@ async function deleteAction(ctx) {
   } else {
     ctx.body = {
       data: false,
-      msg:"抱歉，未找到该条地址"
+      msg: "抱歉，未找到该条地址"
     };
   }
 

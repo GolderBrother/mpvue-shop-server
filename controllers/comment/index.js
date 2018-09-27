@@ -24,7 +24,7 @@ async function postAction(ctx) {
         }
     } else {
         ctx.body = {
-            data: "success",
+            data: "failed",
             message: "添加失败"
         }
     }
@@ -32,7 +32,7 @@ async function postAction(ctx) {
 
 
 }
-async function deleteCollect() {
+async function deleteComment() {
 
 }
 

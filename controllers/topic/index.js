@@ -4,7 +4,7 @@ const {
 
 //专题列表
 async function listAction(ctx) {
-  var page = ctx.query.page || 1;
+  const { page = 1 } = ctx.query;
   const size = 5;
   //这里做分页处理
   const data = await mysql("nideshop_topic").column('id', 'title', 'price_info', 'scene_pic_url', 'subtitle').limit(size).offset((page - 1) * size);
@@ -18,7 +18,7 @@ async function listAction(ctx) {
 }
 //列表详情,下方还有四个专题推荐
 async function detailAction(ctx) {
-  const id = ctx.query.id;
+  const { id } = ctx.query;
   let data = [];
   if (id) {
     data = await mysql('nideshop_topic').where({

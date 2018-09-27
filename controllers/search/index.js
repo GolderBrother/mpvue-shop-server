@@ -2,7 +2,7 @@ const {
   mysql
 } = require('../../mysql');
 async function indexAction(ctx) {
-  const openId = ctx.query.openId;
+  const { openId } = ctx.query;
   // 默认关键词
   const defaultKeyword = await mysql('nideshop_keywords').where({
     is_default: 1
@@ -21,10 +21,11 @@ async function indexAction(ctx) {
     "historyData": historyData
   }
 }
-//搜索的时候匹配搜索相关的
+//搜索的时候匹配搜索相关的 模糊搜索 like '%keyword%'
 async function helperAction(ctx) {
-  const keyword = ctx.query.keyword;
-  var order = ctx.query.order;
+  const { keyword } = ctx.query.keyword;
+  let { order } = ctx.query;
+  let orderBy = "";
   if (!order) {
     order = '';
     orderBy = "id"
@@ -32,16 +33,9 @@ async function helperAction(ctx) {
     orderBy = "retail_price"
   }
   const keywords = await mysql("nideshop_goods").orderBy(orderBy, order).column('id', 'name', 'list_pic_url', 'retail_price').where("name", 'like', '%' + keyword + '%').limit(10).select();
-  if (keyword) {
-    ctx.body = {
-      keywords
-    }
-  } else {
-    ctx.body = {
-      keywords: []
-    }
+  ctx.body = {
+    keywords: keyword ? keywords : []
   }
-
 }
 // async function () {
 
@@ -71,14 +65,8 @@ async function addHistoryAction(ctx) {
       "keyword": keyword,
       "add_time": parseInt(new Date().getTime() / 1000)
     })
-    if (data) {
-      ctx.body = {
-        data: "success"
-      }
-    } else {
-      ctx.body = {
-        data: "fail"
-      }
+    ctx.body = {
+      data: data ? "success" : "fail"
     }
   } else {
     ctx.body = {
@@ -90,22 +78,15 @@ async function addHistoryAction(ctx) {
 //清除历史记录
 async function clearhistoryAction(ctx) {
 
-  const openId = ctx.request.body.openId;
+  const { openId } = ctx.request.body;
   console.log(openId);
 
   const data = await mysql('nideshop_search_history').where({
     "user_id": openId
   }).del();
-  if (data) {
-    ctx.body = {
-      "data": "清除成功"
-    }
-  } else {
-    ctx.body = {
-      "data": null
-    }
+  ctx.body = {
+    "data": data ? "清除成功" : null
   }
-
 }
 
 module.exports = {

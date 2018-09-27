@@ -20,12 +20,11 @@ async function indexAction(ctx) {
     data = currentCategory;
   }
   
-
   ctx.body = {
     "categoryList": data,
   }
 }
-//点击右侧分类时获取左侧对应的分类
+//点击左侧分类时获取右侧对应的分类
 async function currentAction(ctx) {
   const {
     id: categoryId
@@ -50,7 +49,7 @@ async function currentAction(ctx) {
 //1.需要头部导航包含的分类
 //2.查找导航上分类对应的商品
 async function categoryNav(ctx) {
-  const categoryId = ctx.query.id;
+  const { id: categoryId } = ctx.query;
   //获得当前分类
   const currentNav = await mysql("nideshop_category").where({
     "id": categoryId

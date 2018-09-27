@@ -8,8 +8,7 @@ const {
  */
 async function detailAction(ctx) {
   //ctx.query 获取get请求的参数对象的形式
-  const goodsId = ctx.query.id;
-  const openId = ctx.query.openId;
+  const { id:goodsId,openId} = ctx.query;
   //商品信息
   const info = await mysql('nideshop_goods').where({
     'id': goodsId
@@ -105,9 +104,7 @@ async function detailAction(ctx) {
 
 
 async function goodsList(ctx) {
-  const categoryId = ctx.query.categoryId;
-  const isNew = ctx.query.isNew;
-  const isHot = ctx.query.isHot;
+  const { categoryId,isNew ,isHot} = ctx.query;
   // const page = this.get('page');
   // const size = this.get('size');
   // const sort = this.get('sort');
