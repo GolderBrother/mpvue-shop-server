@@ -47,12 +47,11 @@ async function detailAction(ctx) {
     }).select();
 
     const goodsIds = orderDetail[0].goods_id.split(",");
-    console.log(goodsIds);
+    console.log(goodsIds,openId);
 
     const list = await mysql('nideshop_cart').andWhere({
         user_id: openId
     }).whereIn('goods_id', goodsIds).select();
-
     //收货地址
     let addressList;
     if (addressId) {

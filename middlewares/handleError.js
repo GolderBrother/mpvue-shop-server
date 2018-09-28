@@ -5,7 +5,7 @@ const handleError = async (ctx,next) => {
         await next();
     } catch (error) {
         console.log(error)
-        ctx.status = 500;
+        ctx.status = error.status || 500;
         ctx.body = {
             data:false,
             msg:error.message
