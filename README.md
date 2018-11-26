@@ -24,6 +24,12 @@
 		char: 'utf8mb4'
     };
 
+    // 微信小程序 App ID
+    appId: 'wxd2677ab83f7a0569',
+
+    // 微信小程序 App Secret
+    appSecret: 'xxxxxx',
+
 
 ## 3.腾讯官方也提供的详细的搭建本地开发配置说明 ##
 
@@ -142,7 +148,7 @@
 ### 4、地址管理
 ![](https://user-gold-cdn.xitu.io/2018/8/25/165719e2d9b28ee1?w=327&h=573&f=gif&s=611343)
 
-# 小程序端传送门 [点击进入小程序地址](https://github.com/heyushuo/mpvue-shop)
+# 小程序端传送门 [点击进入小程序地址](https://github.com/GolderBrother/mpvue-shop-client)
 # 最后 #
 - 喜欢的记得点个start,鼓励一下谢谢哈!!
 - 微信号 18450087586
